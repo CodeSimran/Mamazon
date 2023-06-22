@@ -1,0 +1,101 @@
+<% include ./includes/header.ejs %>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/create/product" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" value="<%=use.prodname%>" name="productname" id="exampleFormControlInput1"
+                            placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Description</label>
+                        <input type="text" class="form-control" name="desc" id="exampleFormControlInput1"
+                            placeholder="Description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="exampleFormControlInput1" name="price"
+                            placeholder="Price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Discount</label>
+                        <input type="number" class="form-control" id="exampleFormControlInput1" name="discount"
+                            placeholder="Discount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Product Images</label>
+                        <input type="file" name="image" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-2">
+                        <input type="file" name="image" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-2">
+                        <input type="file" name="image" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                <button type="submit" class="btn btn-primary ">Confirm identity</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container d-flex align-items-center p-5">
+        <% use.forEach(function(elem){ %>
+
+            <div class="card m-3" style="width: 18rem;">
+                <div style="width: 100%; height: 40vh; overflow: hidden;">
+                    <img src="../images/uploads/productimg/<%=elem.image[2]%>"
+                        style="width: 100%; height: 100%; object-fit: contain; object-position: center;"
+                        class="card-img-top" alt="">
+                        </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%=elem.prodname%>
+                        </h5>
+                        <p class="card-text">
+                            <%=elem.desc%>
+                        </p>
+                        <h1>
+                            <%=elem.price%>
+                        </h1>
+                        <a href="/edit/product/<%=elem._id%>" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" class="btn  bg-warning m-1">Edit</a>
+                        <a href="/delete/product/<%=elem._id %>" class="btn bg-danger">Delete</a>
+                    </div>
+                </div>
+
+                <% })%>
+
+
+            </div>
+
+
+            <% include ./includes/footer.ejs %>

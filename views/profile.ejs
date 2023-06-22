@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0; 
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #logout {
+            position: absolute;
+            right: 10%;
+            top: 12%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/create/product" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" name="productname" id="exampleFormControlInput1"
+                                placeholder="Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Description</label>
+                            <input type="text" class="form-control" name="desc" id="exampleFormControlInput1"
+                                placeholder="Description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="exampleFormControlInput1" name="price"
+                                placeholder="Price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Discount</label>
+                            <input type="number" class="form-control" id="exampleFormControlInput1" name="discount"
+                                placeholder="Discount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Product Images</label>
+                            <input type="file" name="image" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-2">
+                            <input type="file" name="image" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-2">
+                            <input type="file" name="image" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                        </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    <button type="submit" class="btn btn-primary ">Confirm identity</button>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container p-3 py-5">
+        <div id="logout"><a class="px-3 p-2 bg-danger rounded text-light " href="/logout">Logout</a></div>
+        <h1 class="mt-2 mb-5">Your Profile</h1>
+
+
+        <% if(verified === false){%>
+            <div class="container d-flex justify-content-between rounded py-2 px-4 align-items-center mx-1 bg-danger ">
+                <p class="m-1 text-light">Your Profile is incomplete <a class="text-light" href="/verified">verify your
+                        account</a>
+                    to get complete access</p>
+                <a class="m-1 text-light px-2 rounded py-1 bg-dark" href="/verified">Verify Now</a>
+            </div>
+            <%} else{%>
+                <div
+                    class="container d-flex justify-content-between rounded py-2 px-4 align-items-center mx-1 bg-success ">
+                    <p class="m-1 text-light">Congrats ! Your Account is Verified
+                        Now.. </p>
+                </div>
+                <%}%>
+
+                    <div class="p-0 d-flex ">
+                        <div class="p-0 my-4">
+                            <img src="../images/uploads/userimage/<%=user.pic%>" style="width: 200px; height: 200px;"
+                                class="img-thumbnail" alt="">
+                        </div>
+                        <div class="mx-4">
+                            <h2 class="mt-4">
+                                <%= user.name %>
+                            </h2>
+                            <p>@<%= user.username %>
+                            </p>
+                            <p class="text-black-50">
+                                <%=user.address%>
+                            </p>
+                            <a href="/upload" class="mt-5">Edit Your Profile</a>
+                        </div>
+
+                    </div>
+
+                    <% if(user.seller){%>
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Create a Product
+                        </button>
+
+
+                        <a href="" class="btn btn-primary link mx-4 bg-warning border-0">Upadate Your Product</a>
+                        <a href="/showproducts" class="btn btn-primary link mx-2">Show all Products</a>
+
+
+                        <h2 class="my-4">Recent Created Products</h2>
+                        <div class="container">
+                            <% user.productid.forEach(function(dets){ %>
+                                <div class="card d-inline-block mx-4" style="width: 18rem;">
+                                    <div id="carouselExample" class="carousel slide">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active"
+                                                style="width: 18rem; height: 40vh; overflow: hidden;">
+
+                                                <img style="width: 100%; height: 100%; object-fit: contain; object-position: center;"
+                                                    src="../images/uploads/productimg/<%=dets.image[0] %>"
+                                                    class="d-block card-img-top" alt="...">
+                                            </div>
+                                            <% for(var i=1;i<=2;i++){ %>
+                                                <div class="carousel-item "
+                                                    style="width: 18rem; height: 40vh; overflow: hidden;">
+                                                    <img src="../images/uploads/productimg/<%=dets.image[i] %>"
+                                                        class="d-block w-100 card-img-top" alt="..." style="width: 100%;
+                                                         height: 100%; object-fit: contain; object-position: center;">
+                                                </div>
+
+                                                <% }%>
+
+                                        </div>
+                                        <button class=" carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExample" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon bg-danger"
+                                                aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExample" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon bg-danger"
+                                                aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= dets.prodname %>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= dets.desc %>
+                                        </p>
+                                        <a href="#" class="btn btn-primary">Edit</a>
+                                    </div>
+                                </div>
+                                <% })%>
+                        </div>
+                        <%}else{%>
+                            <a href="" class="btn btn-primary link mx-2">go to cart</a>
+                            <h2 class="my-4">Have a look on Recent Created Products</h2>
+                            <div class="container">
+
+                                <div class="card" style="width: 18rem;">
+                                    <img src="../images/uploads/productimg/prod.image[1]" class="card-img-top" alt="">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card
+                                            title and make
+                                            up
+                                            the
+                                            bulk of the
+                                            card's
+                                            content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <%}%>
+
+
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+PRIMARY ROUTES
+              
+/              - GET  -  page to display the main page
+/register      - POST -  route to register user
+/login         - GET  -  route to show login page
+/login         - POST -  login the user and redirect to profile
+/logout        - GET  -  logout the user
+/profile       - GET  -  page to show profile
+
+SECONDARY ROUTES
+
+/verified       - GET  - page to ask for verification details.
+/verifiedv      - POST - route to update the verification details and 
+                          redirect to the profile page 
+/upload         - POST - upload user picture
+
+
+/create/product - get - show a form which contains fields to 
+                        create a new product in the app
+
+/create/product - POST - create a new product, but before  
+                         that check if user is vendor or normal user                      
+
+/edit/product/:id       - GET   - show a form to edit the product
+/delete/product/:id     - GET   - delete a product
+
+
+/edit/product/:id       - POST   - show a form to edit the product
+/wishlist/product/:id   - GET    - wishlist the product for loggedin usernp
